@@ -34,4 +34,19 @@ public class CaseRepositoryTest {
         assertEquals("name3", cases.get(1).getName());
         assertEquals("name1", cases.get(2).getName());
     }
+
+    @Test
+    public void should_fetch_all_test_by_name() {
+        Case kase = new Case(1000L, "name1");
+        Case kase2 = new Case(3000L, "name1");
+        Case kase3 = new Case(2000L, "name2");
+
+        caseRepository.save(kase);
+        caseRepository.save(kase2);
+        caseRepository.save(kase3);
+
+        List<Case> cases = caseRepository.findAllByName("name1");
+
+        assertEquals(2, cases.size());
+    }
 }

@@ -2,11 +2,9 @@ package com.tw.apistackbase.Entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 public class Procuratorate {
@@ -19,11 +17,22 @@ public class Procuratorate {
     @Column(unique = true, length = 50)
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Prosecutor> prosecutors;
+
     public Procuratorate() {
     }
 
     public Procuratorate(@NotNull String name) {
         this.name = name;
+    }
+
+    public Set<Prosecutor> getProsecutors() {
+        return prosecutors;
+    }
+
+    public void setProsecutors(Set<Prosecutor> prosecutors) {
+        this.prosecutors = prosecutors;
     }
 
     public String getId() {
@@ -40,5 +49,9 @@ public class Procuratorate {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addProsecutor(Prosecutor prosecutor) {
+        this.prosecutors.add(prosecutor);
     }
 }

@@ -2,6 +2,7 @@ package com.tw.apistackbase.repo;
 
 import com.tw.apistackbase.Entity.Case;
 import com.tw.apistackbase.Entity.CaseDetail;
+import com.tw.apistackbase.Entity.Procuratorate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class CaseRepositoryTest {
         Case kase2 = new Case(3000L, "name2");
         Case kase3 = new Case(2000L, "name3");
 
+        Procuratorate procuratorate = new Procuratorate("TEST");
+        kase.setProcuratorate(procuratorate);
+        kase2.setProcuratorate(procuratorate);
+        kase3.setProcuratorate(procuratorate);
+
         caseRepository.save(kase);
         caseRepository.save(kase2);
         caseRepository.save(kase3);
@@ -42,6 +48,11 @@ public class CaseRepositoryTest {
         Case kase2 = new Case(3000L, "name1");
         Case kase3 = new Case(2000L, "name2");
 
+        Procuratorate procuratorate = new Procuratorate("TEST");
+        kase.setProcuratorate(procuratorate);
+        kase2.setProcuratorate(procuratorate);
+        kase3.setProcuratorate(procuratorate);
+
         caseRepository.save(kase);
         caseRepository.save(kase2);
         caseRepository.save(kase3);
@@ -56,6 +67,8 @@ public class CaseRepositoryTest {
         Case kase = new Case(1000L, "name1");
         CaseDetail caseDetail = new CaseDetail("test1", "test2");
         kase.setDetail(caseDetail);
+        Procuratorate procuratorate = new Procuratorate("TEST");
+        kase.setProcuratorate(procuratorate);
 
         Case caseInDb = caseRepository.save(kase);
         Case fetchedCase = caseRepository.findById(caseInDb.getId()).orElse(null);
@@ -64,5 +77,21 @@ public class CaseRepositoryTest {
 
         CaseDetail caseDetailInDb = fetchedCase.getDetail();
         assertEquals(caseDetail.getObjectiveFactor(), caseDetailInDb.getObjectiveFactor());
+    }
+
+    @Test
+    public void should_get_procuratorate_detail_in_case() {
+        Case kase = new Case(1000L, "name1");
+
+        Procuratorate procuratorate = new Procuratorate("TEST");
+        kase.setProcuratorate(procuratorate);
+
+        Case caseInDb = caseRepository.save(kase);
+        Case fetchedCase = caseRepository.findById(caseInDb.getId()).orElse(null);
+
+        assertNotNull(fetchedCase);
+
+        Procuratorate procuratorateInDb = fetchedCase.getProcuratorate();
+        assertEquals(procuratorate.getName(), procuratorateInDb.getName());
     }
 }

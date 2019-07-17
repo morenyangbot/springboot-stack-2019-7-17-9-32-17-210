@@ -49,6 +49,14 @@ public class Case {
         this.detail = detail;
     }
 
+    public Procuratorate getProcuratorate() {
+        return procuratorate;
+    }
+
+    public void setProcuratorate(Procuratorate procuratorate) {
+        this.procuratorate = procuratorate;
+    }
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -62,4 +70,8 @@ public class Case {
 
     @OneToOne(cascade = CascadeType.ALL)
     private CaseDetail detail;
+
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Procuratorate procuratorate;
 }

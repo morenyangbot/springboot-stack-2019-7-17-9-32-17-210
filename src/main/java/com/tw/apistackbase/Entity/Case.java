@@ -2,9 +2,7 @@ package com.tw.apistackbase.Entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -43,6 +41,14 @@ public class Case {
         this.name = name;
     }
 
+    public CaseDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(CaseDetail detail) {
+        this.detail = detail;
+    }
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -53,4 +59,7 @@ public class Case {
 
     @NotNull
     private String name;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private CaseDetail detail;
 }

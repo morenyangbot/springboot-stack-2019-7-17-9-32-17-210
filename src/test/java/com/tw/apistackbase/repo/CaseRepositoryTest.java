@@ -1,6 +1,7 @@
 package com.tw.apistackbase.repo;
 
 import com.tw.apistackbase.Entity.Case;
+import com.tw.apistackbase.Entity.CaseDetail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,20 @@ public class CaseRepositoryTest {
         List<Case> cases = caseRepository.findAllByName("name1");
 
         assertEquals(2, cases.size());
+    }
+
+    @Test
+    public void should_get_case_detail_in_case() {
+        Case kase = new Case(1000L, "name1");
+        CaseDetail caseDetail = new CaseDetail("test1", "test2");
+        kase.setDetail(caseDetail);
+
+        Case caseInDb = caseRepository.save(kase);
+        Case fetchedCase = caseRepository.findById(caseInDb.getId()).orElse(null);
+
+        assertNotNull(fetchedCase);
+
+        CaseDetail caseDetailInDb = fetchedCase.getDetail();
+        assertEquals(caseDetail.getObjectiveFactor(), caseDetailInDb.getObjectiveFactor());
     }
 }

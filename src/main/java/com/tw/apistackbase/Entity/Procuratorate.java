@@ -51,7 +51,4 @@ public class Procuratorate {
         this.name = name;
     }
 
-    public void addProsecutor(Prosecutor prosecutor) {
-        this.prosecutors.add(prosecutor);
-    }
 }
